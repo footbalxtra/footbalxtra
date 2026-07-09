@@ -7,6 +7,7 @@
 <meta name="description" content="Official digital shop of FootballXtra: ebooks, exclusive Telegram community and more, built for Ronaldo fans and football obsessives.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script data-goatcounter="https://footballxtra.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <style>
   :root{
     --night: #0B1220;
@@ -473,6 +474,19 @@
   burger.addEventListener('click', () => navLinks.classList.toggle('open'));
   navLinks.querySelectorAll('a').forEach(a => {
     a.addEventListener('click', () => navLinks.classList.remove('open'));
+  });
+
+  // Track outbound clicks (ebook/gear/community buttons) as GoatCounter events
+  document.querySelectorAll('.buy, .community-price .btn-primary').forEach(link => {
+    link.addEventListener('click', () => {
+      if (window.goatcounter && window.goatcounter.count) {
+        window.goatcounter.count({
+          path: 'click-' + link.closest('.card, .community-price').querySelector('h3, .num')?.textContent?.trim().toLowerCase().replace(/\s+/g,'-') || 'unknown',
+          title: link.textContent.trim(),
+          event: true
+        });
+      }
+    });
   });
 </script>
 </html>
