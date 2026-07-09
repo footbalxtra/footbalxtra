@@ -43,6 +43,7 @@
   nav.wrap{
     display:flex;align-items:center;justify-content:space-between;
     padding-top:16px;padding-bottom:16px;
+    position:relative;
   }
   .logo{
     font-family:var(--display);
@@ -60,7 +61,7 @@
     transition:transform .15s;
   }
   .nav-cta:hover{transform:translateY(-1px);}
-  .burger{display:none;background:none;border:0;color:var(--white);font-size:24px;}
+  .burger{display:none;background:none;border:0;color:var(--white);font-size:24px;cursor:pointer;}
 
   .ticker-bar{
     background:var(--pitch);
@@ -240,7 +241,16 @@
   .copyright{color:var(--muted);font-size:13px;}
 
   @media (max-width:820px){
-    .nav-links{display:none;}
+    .nav-links{
+      display:none;
+      position:absolute;top:100%;left:0;right:0;
+      background:var(--night);
+      flex-direction:column;
+      gap:0;
+      border-bottom:1px solid var(--panel-line);
+    }
+    .nav-links.open{display:flex;}
+    .nav-links a{padding:16px 24px;border-top:1px solid var(--panel-line);}
     .burger{display:block;}
     .scoreboard{grid-template-columns:1fr;}
     .community{grid-template-columns:1fr;padding:32px;}
@@ -256,13 +266,14 @@
 <header>
   <nav class="wrap">
     <div class="logo">FOOTBALL<span>XTRA</span></div>
-    <div class="nav-links">
+    <div class="nav-links" id="navLinks">
       <a href="#shop">Ebooks</a>
       <a href="#gear">Gear</a>
       <a href="#community">Community</a>
       <a href="#newsletter">Newsletter</a>
     </div>
     <a href="#shop" class="nav-cta">Shop Now</a>
+    <button class="burger" id="burgerBtn" aria-label="Menu">☰</button>
   </nav>
 </header>
 
@@ -456,4 +467,12 @@
 </footer>
 
 </body>
+<script>
+  const burger = document.getElementById('burgerBtn');
+  const navLinks = document.getElementById('navLinks');
+  burger.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => navLinks.classList.remove('open'));
+  });
+</script>
 </html>
